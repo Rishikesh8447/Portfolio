@@ -2,26 +2,34 @@ import { useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
-import { ScrollSmoother } from "gsap-trial/ScrollSmoother";
 import "./styles/Navbar.css";
 
-gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
-export let smoother: ScrollSmoother;
+gsap.registerPlugin(ScrollTrigger);
+
+export const smoother = {
+  scrollTop(value?: number) {
+    if (typeof value === "number") {
+      window.scrollTo({ top: value });
+    }
+    return window.scrollY;
+  },
+  scrollTo(
+    target: string | Element | null,
+    smooth = true,
+    _position?: string
+  ) {
+    const element =
+      typeof target === "string" ? document.querySelector(target) : target;
+    element?.scrollIntoView({ behavior: smooth ? "smooth" : "auto" });
+  },
+  paused(_value?: boolean) {
+    return false;
+  },
+};
 
 const Navbar = () => {
   useEffect(() => {
-    smoother = ScrollSmoother.create({
-      wrapper: "#smooth-wrapper",
-      content: "#smooth-content",
-      smooth: 1.7,
-      speed: 1.7,
-      effects: true,
-      autoResize: true,
-      ignoreMobileResize: true,
-    });
-
     smoother.scrollTop(0);
-    smoother.paused(true);
 
     let links = document.querySelectorAll(".header ul a");
     links.forEach((elem) => {
@@ -36,21 +44,21 @@ const Navbar = () => {
       });
     });
     window.addEventListener("resize", () => {
-      ScrollSmoother.refresh(true);
+      ScrollTrigger.refresh(true);
     });
   }, []);
   return (
     <>
       <div className="header">
         <a href="/#" className="navbar-title" data-cursor="disable">
-          Logo
+          Rishikesh Patel
         </a>
         <a
-          href="mailto:example@mail.com"
+          href="mailto:rishikeshpatel1199@gmail.com"
           className="navbar-connect"
           data-cursor="disable"
         >
-          example@mail.com
+          rishikeshpatel1199@gmail.com
         </a>
         <ul>
           <li>

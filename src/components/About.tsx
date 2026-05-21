@@ -6,9 +6,11 @@ const About = () => {
       <div className="about-me">
         <h3 className="title">About Me</h3>
         <p className="para">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quis
-          dolores numquam iusto Ratione earum ducimus autem id iure pariatur
-          dolorum quae maiores.
+          Full Stack Developer passionate about building scalable web
+          applications using React, Node.js, TypeScript, MongoDB, Express.js,
+          and modern frontend technologies. Focused on creating performant,
+          responsive, and production-ready applications with clean architecture
+          and modern UI experiences.
         </p>
       </div>
     </div>

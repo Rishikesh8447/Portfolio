@@ -1,172 +1,102 @@
-import { useEffect, useRef } from "react";
-import "./styles/WhatIDo.css";
+import { useEffect } from "react";
+import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import "./styles/WhatIDo.css";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const buildCards = [
+  {
+    title: "FRONTEND",
+    subtitle: "React • TypeScript • Tailwind CSS",
+    description:
+      "Building responsive, scalable, and modern interfaces using React, TypeScript, Tailwind CSS, and reusable component architecture.",
+  },
+  {
+    title: "BACKEND",
+    subtitle: "Node.js • Express.js • MongoDB",
+    description:
+      "Designing REST APIs, authentication systems, MongoDB integrations, and scalable backend logic using Node.js and Express.js.",
+  },
+];
 
 const WhatIDo = () => {
-  const containerRef = useRef<(HTMLDivElement | null)[]>([]);
-  const setRef = (el: HTMLDivElement | null, index: number) => {
-    containerRef.current[index] = el;
-  };
   useEffect(() => {
-    if (ScrollTrigger.isTouch) {
-      containerRef.current.forEach((container) => {
-        if (container) {
-          container.classList.remove("what-noTouch");
-          container.addEventListener("click", () => handleClick(container));
+    const context = gsap.context(() => {
+      gsap.fromTo(
+        [".build-kicker", ".build-title", ".build-copy"],
+        { autoAlpha: 0, y: 34 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.9,
+          ease: "power3.out",
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: ".whatIDO",
+            start: "top 70%",
+          },
         }
-      });
-    }
-    return () => {
-      containerRef.current.forEach((container) => {
-        if (container) {
-          container.removeEventListener("click", () => handleClick(container));
-        }
-      });
-    };
-  }, []);
-  return (
-    <div className="whatIDO">
-      <div className="what-box">
-        <h2 className="title">
-          W<span className="hat-h2">HAT</span>
-          <div>
-            I<span className="do-h2"> DO</span>
-          </div>
-        </h2>
-      </div>
-      <div className="what-box">
-        <div className="what-box-in">
-          <div className="what-border2">
-            <svg width="100%">
-              <line
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="100%"
-                stroke="white"
-                strokeWidth="2"
-                strokeDasharray="7,7"
-              />
-              <line
-                x1="100%"
-                y1="0"
-                x2="100%"
-                y2="100%"
-                stroke="white"
-                strokeWidth="2"
-                strokeDasharray="7,7"
-              />
-            </svg>
-          </div>
-          <div
-            className="what-content what-noTouch"
-            ref={(el) => setRef(el, 0)}
-          >
-            <div className="what-border1">
-              <svg height="100%">
-                <line
-                  x1="0"
-                  y1="0"
-                  x2="100%"
-                  y2="0"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-                <line
-                  x1="0"
-                  y1="100%"
-                  x2="100%"
-                  y2="100%"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-              </svg>
-            </div>
-            <div className="what-corner"></div>
+      );
 
-            <div className="what-content-in">
-              <h3>DEVELOP</h3>
-              <h4>Description</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-                quia aliquid laboriosam ducimus sit molestiae.
-              </p>
-              <h5>Skillset & tools</h5>
-              <div className="what-content-flex">
-                <div className="what-tags">JavaScript</div>
-                <div className="what-tags">TypeScript</div>
-                <div className="what-tags">Three.js</div>
-                <div className="what-tags">React</div>
-                <div className="what-tags">Css</div>
-                <div className="what-tags">Node.js</div>
-                <div className="what-tags">Next.js</div>
-                <div className="what-tags">Express.js</div>
-                <div className="what-tags">PHP</div>
-                <div className="what-tags">MySql</div>
+      gsap.fromTo(
+        ".build-card",
+        { autoAlpha: 0, y: 44, scale: 0.96 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.85,
+          ease: "power3.out",
+          stagger: 0.14,
+          scrollTrigger: {
+            trigger: ".build-grid",
+            start: "top 78%",
+          },
+        }
+      );
+    });
+
+    return () => context.revert();
+  }, []);
+
+  return (
+    <section className="whatIDO" id="what-build">
+      <div className="build-glow build-glow-one"></div>
+      <div className="build-glow build-glow-two"></div>
+      <div className="build-model-glow"></div>
+
+      <div className="build-content">
+        <div className="build-heading">
+          <p className="build-kicker">
+            Full Stack Developer focused on building scalable, performant, and
+            modern web applications.
+          </p>
+          <h2 className="build-title title">
+            WHAT I <span>DO</span>
+          </h2>
+          <p className="build-copy para">
+            I turn product ideas into polished web experiences with reliable
+            frontend architecture, practical backend systems, and interfaces
+            that feel fast, clear, and useful.
+          </p>
+        </div>
+
+        <div className="build-grid">
+          {buildCards.map((card, index) => (
+            <article className="build-card" key={card.title}>
+              <div className="build-card-index">0{index + 1}</div>
+              <div>
+                <h3>{card.title}</h3>
+                <p className="build-card-subtitle">{card.subtitle}</p>
               </div>
-              <div className="what-arrow"></div>
-            </div>
-          </div>
-          <div
-            className="what-content what-noTouch"
-            ref={(el) => setRef(el, 1)}
-          >
-            <div className="what-border1">
-              <svg height="100%">
-                <line
-                  x1="0"
-                  y1="100%"
-                  x2="100%"
-                  y2="100%"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-              </svg>
-            </div>
-            <div className="what-corner"></div>
-            <div className="what-content-in">
-              <h3>DESIGN</h3>
-              <h4>Description</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-                quia aliquid laboriosam ducimus sit molestiae
-              </p>
-              <h5>Skillset & tools</h5>
-              <div className="what-content-flex">
-                <div className="what-tags">Blender</div>
-                <div className="what-tags">Zbrush</div>
-                <div className="what-tags">UI Design</div>
-                <div className="what-tags">Motion</div>
-                <div className="what-tags">Rigging</div>
-                <div className="what-tags">3D Animation</div>
-                <div className="what-tags">Character Design</div>
-                <div className="what-tags">Modelling</div>
-              </div>
-              <div className="what-arrow"></div>
-            </div>
-          </div>
+              <p className="build-card-description">{card.description}</p>
+            </article>
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
 export default WhatIDo;
-
-function handleClick(container: HTMLDivElement) {
-  container.classList.toggle("what-content-active");
-  container.classList.remove("what-sibling");
-  if (container.parentElement) {
-    const siblings = Array.from(container.parentElement.children);
-
-    siblings.forEach((sibling) => {
-      if (sibling !== container) {
-        sibling.classList.remove("what-content-active");
-        sibling.classList.toggle("what-sibling");
-      }
-    });
-  }
-}

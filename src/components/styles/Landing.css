@@ -15,7 +15,7 @@
 .landing-circle1 {
   top: 0%;
   left: 0%;
-  z-index: 15;
+  z-index: 0;
   position: fixed;
   width: 300px;
   height: 300px;
@@ -53,7 +53,7 @@
   top: 50%;
   right: 0%;
   transform: translate(calc(100% - 2px), -50%);
-  z-index: 9;
+  z-index: 0;
   position: fixed;
   display: none;
   width: 300px;
@@ -95,20 +95,31 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, 100%) scale(1.4);
-  opacity: 0;
+  opacity: 0.55;
 }
 .character-model {
-  height: 80%;
-  height: 80vh;
+  --character-x: -50%;
+  --character-y: 0%;
+  --character-scale: 0.9;
+  height: 88vh;
   position: absolute;
   max-width: 1920px;
   max-height: 1080px;
-  transform: translateX(-50%);
+  transform: translateX(var(--character-x)) translateY(var(--character-y))
+    scale(var(--character-scale));
   width: 100%;
   left: 50%;
-  z-index: 0;
-  bottom: 50px;
-  pointer-events: inherit;
+  z-index: 5;
+  bottom: -3vh;
+  pointer-events: none;
+  will-change: transform;
+  animation: modelFloat 5.5s ease-in-out infinite alternate;
+}
+
+@keyframes modelFloat {
+  100% {
+    margin-bottom: 16px;
+  }
 }
 .character-model::after {
   content: "";
@@ -158,9 +169,10 @@
 }
 .landing-intro {
   position: absolute;
-  z-index: 9;
+  z-index: 20;
   top: 12%;
   left: 0;
+  max-width: 390px;
 }
 .landing-intro h2 {
   margin: 0;
@@ -179,6 +191,15 @@
   font-family: "Geist", sans-serif;
 }
 
+.landing-intro p {
+  margin: 18px 0 0;
+  color: rgba(246, 240, 255, 0.72);
+  font-size: 16px;
+  line-height: 1.65;
+  font-weight: 300;
+  letter-spacing: 0;
+}
+
 /* .landing-intro h1 span {
    font-weight: 200; 
 } */
@@ -189,70 +210,66 @@
   transform: translateX(50%);
   bottom: 40px;
   top: inherit;
-  z-index: 9;
+  z-index: 20;
 }
-.landing-info h3 {
-  font-size: 22px;
-  letter-spacing: 2px;
-  font-weight: 300;
-  color: var(--accentColor);
+.landing-role-title {
   margin: 0;
-}
-.landing-info h2 {
-  margin: 0;
-  margin-top: -20px;
-  margin-left: 20px;
   font-family: "Geist", sans-serif;
-  font-weight: 600;
-  font-size: 32px;
-  line-height: 40px;
-  position: relative;
-  display: flex;
-  flex-wrap: nowrap;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-.landing-h2-info-1 {
-  position: absolute;
-  top: 0;
-}
-h2.landing-info-h2 {
-  color: #c481ff;
+  font-weight: 700;
   font-size: 42px;
-  width: 120%;
-  margin: 0;
-  font-family: "Geist", sans-serif;
-  font-weight: 600;
+  line-height: 0.98;
   position: relative;
-  margin-left: -5px;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  width: min(360px, 34vw);
+  height: 90px;
+  color: #ffffff;
+  text-shadow: 0 0 34px rgba(170, 66, 255, 0.44);
+  overflow: hidden;
 }
-.landing-h2-2 {
+
+.landing-role-title span {
   position: absolute;
-  top: 0;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(32px);
+  animation: rotateHeroTitle 9s ease-in-out infinite;
 }
-.landing-info-h2::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 120%;
-  z-index: 3;
-  background-image: linear-gradient(
-    0deg,
-    var(--backgroundColor) 40%,
-    rgba(0, 0, 0, 0) 110%
-  );
-  top: 0;
-  left: 0;
+
+.landing-role-title span:nth-child(2) {
+  animation-delay: 3s;
+}
+
+.landing-role-title span:nth-child(3) {
+  animation-delay: 6s;
+}
+
+@keyframes rotateHeroTitle {
+  0%,
+  8% {
+    opacity: 0;
+    transform: translateY(32px);
+    filter: blur(6px);
+  }
+  14%,
+  30% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  38%,
+  100% {
+    opacity: 0;
+    transform: translateY(-28px);
+    filter: blur(6px);
+  }
 }
 @media screen and (min-width: 500px) {
   .landing-circle2 {
     display: block;
   }
   .character-model {
-    z-index: 0;
-  }
-  .landing-info h3 {
-    font-size: 18px;
+    z-index: 5;
   }
   .landing-intro h2 {
     font-size: 18px;
@@ -261,11 +278,7 @@ h2.landing-info-h2 {
     font-size: 30px;
     line-height: 30px;
   }
-  .landing-info h2 {
-    font-size: 35px;
-    line-height: 40px;
-  }
-  h2.landing-info-h2 {
+  .landing-role-title {
     font-size: 38px;
   }
 }
@@ -280,22 +293,17 @@ h2.landing-info-h2 {
     font-size: 40px;
     line-height: 35px;
   }
-  .landing-info h3 {
-    font-size: 25px;
-  }
-  .landing-info h2 {
-    font-size: 45px;
-    line-height: 42px;
-  }
-  h2.landing-info-h2 {
-    font-size: 55px;
+  .landing-role-title {
+    font-size: 48px;
+    height: 106px;
   }
 }
 @media screen and (min-width: 1025px) {
   .character-model {
-    height: 100vh;
-    bottom: 0;
-    z-index: 11;
+    height: 92vh;
+    bottom: -6vh;
+    left: 50%;
+    z-index: 5;
     position: fixed;
   }
   .character-model::after,
@@ -305,7 +313,7 @@ h2.landing-info-h2 {
   .landing-intro {
     top: 50%;
     left: auto;
-    right: 66%;
+    right: 68%;
     transform: translate(0%, -50%);
   }
 
@@ -316,14 +324,14 @@ h2.landing-info-h2 {
     text-align: left;
     transform: translate(0%, -50%);
     right: auto;
-    left: 66%;
+    left: 68%;
   }
 }
 @media screen and (min-width: 1200px) {
   .landing-intro {
     top: 50%;
     left: auto;
-    right: 70%;
+    right: 71%;
     transform: translate(0%, -50%);
   }
 
@@ -334,25 +342,28 @@ h2.landing-info-h2 {
     text-align: left;
     transform: translate(0%, -50%);
     right: auto;
-    left: 70%;
+    left: 71%;
   }
 }
 @media screen and (min-width: 1600px) {
+  .character-model {
+    height: 96vh;
+    left: 50%;
+    bottom: -7vh;
+  }
   .landing-intro h2 {
     font-size: 35px;
   }
   .landing-intro h1 {
-    font-size: 60px;
-    line-height: 55px;
-  }
-  .landing-info h3 {
-    font-size: 35px;
-  }
-  .landing-info h2 {
-    font-size: 65px;
+    font-size: 66px;
     line-height: 62px;
   }
-  h2.landing-info-h2 {
-    font-size: 75px;
+  .landing-intro p {
+    font-size: 18px;
+  }
+  .landing-role-title {
+    font-size: 70px;
+    height: 145px;
+    width: 430px;
   }
 }

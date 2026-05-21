@@ -92,23 +92,92 @@ body {
 }
 
 .techstack {
-  width: 100%;
+  width: min(1300px, var(--cWidth));
   position: relative;
-  height: var(--vh);
+  min-height: 720px;
   margin: auto;
-  margin-top: 50px;
-  margin-bottom: -100px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.techstack::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(219, 187, 255, 0.12);
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 50% 70%, rgba(170, 66, 255, 0.2), transparent 48%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+  z-index: 0;
+}
+
+.techstack-copy {
+  position: relative;
+  z-index: 4;
+  max-width: 760px;
+  margin: 0 auto;
+  padding-top: 82px;
+  text-align: center;
+}
+
+.techstack-copy p {
+  margin: 0 0 14px;
+  color: #d7bbff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .techstack h2 {
-  font-size: 80px;
+  margin: 0;
+  font-size: 76px;
+  line-height: 0.95;
   text-align: center;
-  position: absolute;
+  position: relative;
   width: 100%;
-  top: 120px;
   left: 0;
-  font-weight: 400;
+  font-weight: 700;
   text-transform: uppercase;
+  text-shadow: 0 0 34px rgba(170, 66, 255, 0.3);
+}
+
+.techstack-copy span {
+  display: block;
+  max-width: 620px;
+  margin: 20px auto 0;
+  color: rgba(246, 240, 255, 0.72);
+  font-size: 18px;
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+.tech-canvas {
+  position: absolute !important;
+  inset: 210px 0 0 0;
+  z-index: 1;
+  width: 100% !important;
+  height: calc(100% - 210px) !important;
+  opacity: 0.94;
+  filter: drop-shadow(0 24px 58px rgba(132, 58, 255, 0.2));
+  pointer-events: auto;
+}
+
+.techstack-bg-glow {
+  position: absolute;
+  width: 520px;
+  height: 420px;
+  left: 50%;
+  top: 62%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(137, 78, 255, 0.24);
+  filter: blur(90px);
+  z-index: 0;
 }
 
 @media screen and (min-width: 768px) {
@@ -117,7 +186,25 @@ body {
   }
 }
 @media screen and (max-width: 900px) {
+  .techstack {
+    min-height: 600px;
+    width: calc(100% - 25px);
+  }
+
+  .techstack-copy {
+    padding: 70px 18px 0;
+  }
+
   .techstack h2 {
     font-size: 40px;
+  }
+
+  .techstack-copy span {
+    font-size: 15px;
+  }
+
+  .tech-canvas {
+    inset: 190px 0 0 0;
+    height: calc(100% - 190px) !important;
   }
 }

@@ -1,78 +1,155 @@
-import "./styles/Work.css";
-import WorkImage from "./WorkImage";
+import { useEffect } from "react";
+import { MdArrowOutward } from "react-icons/md";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import "./styles/Work.css";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(ScrollTrigger);
+
+const projects = [
+  {
+    title: "Baat-Chit",
+    subtitle: "Real-Time Chat Application",
+    techStack: "React • Node.js • Express • MongoDB • Socket.io",
+    description:
+      "Built a real-time chat application with authentication, private messaging, live updates, and responsive modern UI.",
+    image: "/images/baat-chit.png",
+    liveDemo: "https://baat-chit-app.onrender.com/login",
+    github: "https://github.com/Rishikesh8447",
+  },
+  {
+    title: "Blogora",
+    subtitle: "Full Stack Blogging Platform",
+    techStack: "Node.js • Express.js • MongoDB Atlas • EJS • Bootstrap",
+    description:
+      "Developed a blogging platform with authentication, rich text editor, trending blogs, categories, search, pagination, and dark mode.",
+    image: "/images/blogora.png",
+    liveDemo: "https://blog-platform-2nir.onrender.com/",
+    github: "https://github.com/Rishikesh8447",
+  },
+  {
+    title: "PasteApp",
+    subtitle: "Paste Sharing Application",
+    techStack: "React • Tailwind CSS • TypeScript",
+    description:
+      "Created a modern paste-sharing application with CRUD functionality, state management, and responsive clean UI.",
+    image: "/images/pasteapp.png",
+    liveDemo: "https://paste-app-blond-pi.vercel.app/",
+    github: "https://github.com/Rishikesh8447",
+  },
+];
 
 const Work = () => {
-  useGSAP(() => {
-  let translateX: number = 0;
+  useEffect(() => {
+    const context = gsap.context(() => {
+      gsap.fromTo(
+        [".projects-eyebrow", ".projects-title", ".projects-subtitle"],
+        { autoAlpha: 0, y: 34 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.85,
+          ease: "power3.out",
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: ".work-section",
+            start: "top 72%",
+          },
+        }
+      );
 
-  function setTranslateX() {
-    const box = document.getElementsByClassName("work-box");
-    const rectLeft = document
-      .querySelector(".work-container")!
-      .getBoundingClientRect().left;
-    const rect = box[0].getBoundingClientRect();
-    const parentWidth = box[0].parentElement!.getBoundingClientRect().width;
-    let padding: number =
-      parseInt(window.getComputedStyle(box[0]).padding) / 2;
-    translateX = rect.width * box.length - (rectLeft + parentWidth) + padding;
-  }
+      gsap.fromTo(
+        ".project-card",
+        { autoAlpha: 0, y: 52, scale: 0.96 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          stagger: 0.16,
+          scrollTrigger: {
+            trigger: ".projects-grid",
+            start: "top 78%",
+          },
+        }
+      );
+    });
 
-  setTranslateX();
+    return () => context.revert();
+  }, []);
 
-  let timeline = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".work-section",
-      start: "top top",
-      end: `+=${translateX}`, // Use actual scroll width
-      scrub: true,
-      pin: true,
-      id: "work",
-    },
-  });
-
-  timeline.to(".work-flex", {
-    x: -translateX,
-    ease: "none",
-  });
-
-  // Clean up (optional, good practice)
-  return () => {
-    timeline.kill();
-    ScrollTrigger.getById("work")?.kill();
-  };
-}, []);
   return (
-    <div className="work-section" id="work">
-      <div className="work-container section-container">
-        <h2>
-          My <span>Work</span>
-        </h2>
-        <div className="work-flex">
-          {[...Array(6)].map((_value, index) => (
-            <div className="work-box" key={index}>
-              <div className="work-info">
-                <div className="work-title">
-                  <h3>0{index + 1}</h3>
+    <section className="work-section" id="work">
+      <div className="projects-glow projects-glow-one"></div>
+      <div className="projects-glow projects-glow-two"></div>
 
-                  <div>
-                    <h4>Project Name</h4>
-                    <p>Category</p>
-                  </div>
+      <div className="work-container section-container">
+        <div className="projects-header">
+          <p className="projects-eyebrow">Selected work</p>
+          <h2 className="projects-title">
+            PROJECTS I&apos;VE <span>BUILT</span>
+          </h2>
+          <p className="projects-subtitle">
+            Full stack applications focused on performance, scalability,
+            real-time communication, and modern user experiences.
+          </p>
+        </div>
+
+        <div className="projects-grid">
+          {projects.map((project, index) => (
+            <article className="project-card" key={project.title}>
+              <a
+                className="project-image-wrap"
+                href={project.liveDemo}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="disable"
+              >
+                <img
+                  src={project.image}
+                  alt={`${project.title} project screenshot`}
+                  loading="lazy"
+                />
+              </a>
+
+              <div className="project-card-body">
+                <div className="project-card-topline">
+                  <span>0{index + 1}</span>
+                  <span>{project.subtitle}</span>
                 </div>
-                <h4>Tools and features</h4>
-                <p>Javascript, TypeScript, React, Threejs</p>
+
+                <div>
+                  <h3>{project.title}</h3>
+                  <p className="project-tech">{project.techStack}</p>
+                </div>
+
+                <p className="project-description">{project.description}</p>
+
+                <div className="project-actions">
+                  <a
+                    href={project.liveDemo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor="disable"
+                  >
+                    Live Demo <MdArrowOutward />
+                  </a>
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor="disable"
+                  >
+                    GitHub <MdArrowOutward />
+                  </a>
+                </div>
               </div>
-              <WorkImage image="/images/placeholder.webp" alt="" />
-            </div>
+            </article>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

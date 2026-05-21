@@ -1,72 +1,105 @@
-import { MdArrowOutward, MdCopyright } from "react-icons/md";
+import { MdArrowOutward, MdCopyright, MdDownload, MdEmail } from "react-icons/md";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import "./styles/Contact.css";
+
+const resumePath = "/resume/RishikeshPatelResume.pdf";
 
 const Contact = () => {
   return (
-    <div className="contact-section section-container" id="contact">
+    <footer className="contact-section section-container" id="contact">
+      <div className="footer-glow footer-glow-one"></div>
+      <div className="footer-glow footer-glow-two"></div>
+
       <div className="contact-container">
-        <h3>Contact</h3>
-        <div className="contact-flex">
-          <div className="contact-box">
-            <h4>Email</h4>
-            <p>
-              <a href="mailto:example@mail.com" data-cursor="disable">
-                example@mail.com
-              </a>
-            </p>
-            <h4>Phone</h4>
-            <p>
-              <a href="tel:+9199999999" data-cursor="disable">
-                +91 99999 99999
-              </a>
-            </p>
+        <div className="footer-heading">
+          <p>Resume & contact</p>
+          <h3>Let&apos;s build something sharp.</h3>
+        </div>
+
+        <div className="resume-panel">
+          <div className="resume-preview" aria-hidden="true">
+            <div className="resume-paper">
+              <div className="resume-paper-top">
+                <span>Rishikesh Patel</span>
+                <small>Resume</small>
+              </div>
+              <div className="resume-lines">
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+              </div>
+              <div className="resume-mini-grid">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
           </div>
-          <div className="contact-box">
-            <h4>Social</h4>
-            <a
-              href="https://github.com"
-              target="_blank"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              Github <MdArrowOutward />
-            </a>
-            <a
-              href="https://www.linkedin.com"
-              target="_blank"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              Linkedin <MdArrowOutward />
-            </a>
-            <a
-              href="https://x.com"
-              target="_blank"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              Twitter <MdArrowOutward />
-            </a>
-            <a
-              href="https://www.instagram.com"
-              target="_blank"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              Instagram <MdArrowOutward />
-            </a>
-          </div>
-          <div className="contact-box">
-            <h2>
-              Designed and Developed <br /> by <span>Moncy Yohannan</span>
-            </h2>
-            <h5>
-              <MdCopyright /> 2024
-            </h5>
+
+          <div className="resume-content">
+            <h4>Rishikesh Patel Resume</h4>
+            <p className="resume-subtitle">
+              Full Stack Developer | React Developer | Software Engineer
+            </p>
+            <div className="resume-actions">
+              <a
+                href={resumePath}
+                target="_blank"
+                rel="noreferrer"
+                data-cursor="disable"
+              >
+                View Resume <MdArrowOutward />
+              </a>
+              <a
+                href={resumePath}
+                download="RishikeshPatelResume.pdf"
+                data-cursor="disable"
+              >
+                Download Resume <MdDownload />
+              </a>
+            </div>
           </div>
         </div>
+
+        <div className="footer-bottom">
+          <div>
+            <h5>
+              Designed & Developed by <span>Rishikesh Patel</span>
+            </h5>
+            <p>
+              <MdCopyright /> 2026
+            </p>
+          </div>
+
+          <nav className="footer-links" aria-label="Footer links">
+            <a
+              href="https://github.com/Rishikesh8447"
+              target="_blank"
+              rel="noreferrer"
+              data-cursor="disable"
+            >
+              <FaGithub /> GitHub
+            </a>
+            <a
+              href="https://linkedin.com/in/rishikesh-patel-117438293"
+              target="_blank"
+              rel="noreferrer"
+              data-cursor="disable"
+            >
+              <FaLinkedinIn /> LinkedIn
+            </a>
+            <a
+              href="mailto:rishikeshpatel1199@gmail.com"
+              data-cursor="disable"
+            >
+              <MdEmail /> Email
+            </a>
+          </nav>
+        </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

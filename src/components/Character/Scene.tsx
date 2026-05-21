@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import setCharacter from "./utils/character";
 import setLighting from "./utils/lighting";
 import { useLoading } from "../../context/LoadingProvider";
@@ -12,6 +14,8 @@ import {
 } from "./utils/mouseUtils";
 import setAnimations from "./utils/animationUtils";
 import { setProgress } from "../Loading";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Scene = () => {
   const canvasDiv = useRef<HTMLDivElement | null>(null);
@@ -52,6 +56,39 @@ const Scene = () => {
       const light = setLighting(scene);
       let progress = setProgress((value) => setLoading(value));
       const { loadCharacter } = setCharacter(renderer, scene, camera);
+      const motionContext = gsap.context(() => {
+        gsap.set(".character-model", {
+          "--character-x": "-50%",
+          "--character-y": "0%",
+          "--character-scale": 0.9,
+        });
+
+        gsap.to(".character-model", {
+          "--character-x": "-72%",
+          "--character-y": "6%",
+          "--character-scale": 0.82,
+          ease: "power2.inOut",
+          scrollTrigger: {
+            trigger: "#about",
+            start: "top 80%",
+            end: "center center",
+            scrub: 1.15,
+          },
+        });
+
+        gsap.to(".character-model", {
+          "--character-x": "-50%",
+          "--character-y": "8%",
+          "--character-scale": 0.7,
+          ease: "power2.inOut",
+          scrollTrigger: {
+            trigger: "#what-build",
+            start: "top 80%",
+            end: "center center",
+            scrub: 1.2,
+          },
+        });
+      });
 
       loadCharacter().then((gltf) => {
         if (gltf) {
@@ -130,6 +167,7 @@ const Scene = () => {
         clearTimeout(debounce);
         scene.clear();
         renderer.dispose();
+        motionContext.revert();
         window.removeEventListener("resize", () =>
           handleResize(renderer, camera, canvasDiv, character!)
         );
